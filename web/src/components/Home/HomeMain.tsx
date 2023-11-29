@@ -12,23 +12,6 @@ const HomeMain: React.FC = () => {
             {/* hero-start */}
             <Hero />
             {/* hero-end */}
-
-            {/* course-start */}
-            <CourseTab />
-            {/* course-end */}
-
-            {/* Carousel-start */}
-            <CarouselTab />
-            {/* Carousel-end */}
-
-            {/* tab-start */}
-            {/* <PriceTab /> */}
-            {/* tab-end */}
-
-            {/* cta-start */}
-            <Cta />
-            {/* cta-end */}
-
             <ButtonToTop/>
         </main>
     )

@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
     return (
         <footer>
             <div className="footer__area footer-bg">
-                <div className="footer__top pt-190 pb-4">
+                <div className="footer__top pt-16 pb-4">
                     <div className="px-4 ">
                         <div className="row flex justify-evenly">
                             <div className="col-xxl-2 col-xl-3 col-lg-6 col-md-6 col-sm-6 flex flex-col text-center">
@@ -19,7 +19,11 @@ const Footer: React.FC = () => {
                                     <div className="footer__widget-head mb-22 pt-[5px]">
                                         <div className="footer__logo">
                                             <Link
-                                                className="flex justify-center" 
+                                                className="flex justify-center pb-2" 
+                                                style={{
+                                                    borderBottom: '2px solid',
+                                                    borderColor: '#DEC47F',
+                                                }}
                                                 href="/">
                                                 <Image
                                                     width={500}
@@ -78,20 +82,20 @@ const Footer: React.FC = () => {
                                             <ul>
                                                 <li>
                                                     <p>
-                                                        <LocationOnIcon className="mr-1"/>Địa chỉ: Tầng 3, TTTM Grand Plaza, số 117 Trần Duy Hưng, P. Trung Hòa, Q. Cầu Giấy, Hà Nội
+                                                        <LocationOnIcon color={'warning'} className="mr-1"/>Địa chỉ: Tầng 3, TTTM Grand Plaza, số 117 Trần Duy Hưng, P. Trung Hòa, Q. Cầu Giấy, Hà Nội
                                                     </p>
                                                 </li>
                                                 <li>
-                                                    <p><PhoneIcon className="mr-1"/>Điện thoại: 024 3573 0200</p>
+                                                    <p><PhoneIcon fontSize="small" color={'warning'} className="mr-1"/>Điện thoại: 024 3573 0200</p>
                                                 </li>
                 
                                                 <li>
-                                                   <p><FaxIcon className="mr-1"/>Fax: 024 3577 1966</p>                            
+                                                   <p><FaxIcon fontSize="small" color={'warning'} className="mr-1"/>Fax: 024 3577 1966</p>                            
                                                 </li>
                         
                                                 <li>
                                                     <p>
-                                                    <EmailIcon className="mr-1" />Email: contact@apec.com.vn
+                                                    <EmailIcon fontSize="small" color={'warning'} className="mr-1" />Email: contact@apec.com.vn
                                                     </p>
                                                 </li>
                                                 <br />
