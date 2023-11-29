@@ -1,0 +1,23 @@
+.round-index {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  color: red;
+  opacity: 0.3;
+  transition: all 0.4s ease-in-out;
+  transform: translateY(-50%);
+}
+
+.round-index:hover {
+  opacity: 1;
+}
+
+/* .split-pane {
+  top: 50px;
+} */
+
