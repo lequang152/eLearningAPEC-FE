@@ -1,70 +1,70 @@
-"use client"
+'use client';
 
-import Link from "next/link"
-import React, { ChangeEvent, useState } from "react"
-import axios, { AxiosError, AxiosResponse } from "axios"
-import Image from "next/image"
-import { makeErrorToast, makeSuccessToast } from "../../utils/toast"
-import { useRouter } from "next/navigation"
-import { ApiService } from "../../utils/api_service"
+import Link from 'next/link';
+import React, { ChangeEvent, useState } from 'react';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import Image from 'next/image';
+import { makeErrorToast, makeSuccessToast } from '../../utils/toast';
+import { useRouter } from 'next/navigation';
+import { ApiService } from '../../utils/api_service';
 
 const SignUpMain: React.FC = () => {
-    const router = useRouter()
+    const router = useRouter();
     const [formSignUp, setFormSignUp] = useState({
-        name: "",
-        username: "",
-        password: "",
-        rePassword: "",
+        name: '',
+        username: '',
+        password: '',
+        rePassword: '',
         agreed: false,
-    })
-    const [passwordVisible, setPasswordVisible] = useState(true)
-    const [re_passwordVisible, setRe_PasswordVisible] = useState(true)
+    });
+    const [passwordVisible, setPasswordVisible] = useState(true);
+    const [re_passwordVisible, setRe_PasswordVisible] = useState(true);
     const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setFormSignUp({ ...formSignUp, [name]: value })
-    }
+        const { name, value } = e.target;
+        setFormSignUp({ ...formSignUp, [name]: value });
+    };
     const handleAgreeChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormSignUp({ ...formSignUp, agreed: e.target.checked })
-    }
+        setFormSignUp({ ...formSignUp, agreed: e.target.checked });
+    };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         const userPost = {
-            name: "",
-            username: "",
-            password: "",
-        }
-        userPost.name = formSignUp.name
-        userPost.username = formSignUp.username
-        userPost.password = formSignUp.password
+            name: '',
+            username: '',
+            password: '',
+        };
+        userPost.name = formSignUp.name;
+        userPost.username = formSignUp.username;
+        userPost.password = formSignUp.password;
         // console.log({ userPost })
 
         if (formSignUp.password != formSignUp.rePassword) {
-            makeErrorToast("Password does not match.")
+            makeErrorToast('Password does not match.');
         } else if (formSignUp.agreed == false) {
-            makeErrorToast("Please agree to our Terms & Conditions.")
+            makeErrorToast('Please agree to our Terms & Conditions.');
         } else {
-            const response = ApiService.Register(formSignUp)
-            response.then((res: AxiosResponse<any, any>) => {
-                makeSuccessToast("Registered successfully.")
-                router.push("/sign-in")
-            })
-            .catch((error: any) => {
-                let textMessage = ""
-                try {
-                    const errors = error.response.data.errors
-                    const keys = Object.keys(errors)
-                    const values = Object.values(errors)
-                    textMessage = `${values[0]}`
-                } catch (err: any) {
-                    textMessage = "An unknown error happended. Try again."
-                } finally {
-                    makeErrorToast(textMessage)
-                }
-            })
-            
+            const response = ApiService.Register(formSignUp);
+            response
+                .then((res: AxiosResponse<any, any>) => {
+                    makeSuccessToast('Registered successfully.');
+                    router.push('/sign-in');
+                })
+                .catch((error: any) => {
+                    let textMessage = '';
+                    try {
+                        const errors = error.response.data.errors;
+                        const keys = Object.keys(errors);
+                        const values = Object.values(errors);
+                        textMessage = `${values[0]}`;
+                    } catch (err: any) {
+                        textMessage = 'An unknown error happended. Try again.';
+                    } finally {
+                        makeErrorToast(textMessage);
+                    }
+                });
         }
-    }
+    };
     return (
         <main>
             <section className="signup__area po-rel-z1 pt-24 pb-36">
@@ -72,15 +72,8 @@ const SignUpMain: React.FC = () => {
                     <Image
                         width={130}
                         height={250}
-                        className="man-1"
-                        src="/assets/img/icon/sign/man-1.png"
-                        alt="img not found"
-                    />
-                    <Image
-                        width={100}
-                        height={123}
-                        className="man-2"
-                        src="/assets/img/icon/sign/man-2.png"
+                        className="study"
+                        src="/assets/img/icon/sign/Elearning2.png"
                         alt="img not found"
                     />
                     <Image
@@ -144,29 +137,13 @@ const SignUpMain: React.FC = () => {
                                         <p>
                                             <span>........</span> Or, <Link href="/sign-up">sign up</Link> with your
                                             email
-                                            <span> ........</span>{" "}
+                                            <span> ........</span>{' '}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="sign__form">
-                                    <form
-                                        action="#"
-                                        onSubmit={handleSubmit}
-                                    >
-                                        {/* <div className="sign__input-wrapper mb-25">
-                  <h5>Full Name</h5>
-                  <div className="sign__input">
-                    <input
-                      type="text"
-                      name="fullName"
-                      value={formSignUp.fullName}
-                      onChange={handleChangeInput}
-                      placeholder="Full name"
-                    />
-                    <i className="fas fa-user"></i>
-                  </div>
-                </div> */}
+                                    <form action="#" onSubmit={handleSubmit}>
                                         <div className="sign__input-wrapper mb-6">
                                             <h5>Your Name</h5>
                                             <div className="sign__input">
@@ -183,7 +160,7 @@ const SignUpMain: React.FC = () => {
                                             </div>
                                         </div>
                                         <div className="sign__input-wrapper mb-6">
-                                            <h5>Work email</h5>
+                                            <h5>Email</h5>
                                             <div className="sign__input">
                                                 <div>
                                                     <i className="fas fa-envelope icon"></i>
@@ -229,7 +206,7 @@ const SignUpMain: React.FC = () => {
                                                 <div>
                                                     <i className="fas fa-lock icon"></i>
                                                     <input
-                                                        type={passwordVisible ? "text" : "password"}
+                                                        type={passwordVisible ? 'text' : 'password'}
                                                         name="rePassword"
                                                         value={formSignUp.rePassword}
                                                         onChange={handleChangeInput}
@@ -258,16 +235,13 @@ const SignUpMain: React.FC = () => {
                                                     checked={formSignUp.agreed}
                                                     onChange={handleAgreeChange}
                                                 />
-                                                <label
-                                                    className="m-check-label"
-                                                    htmlFor="m-agree"
-                                                >
+                                                <label className="m-check-label" htmlFor="m-agree">
                                                     I agree to the <a href="#">Terms & Conditions</a>
                                                 </label>
                                             </div>
                                         </div>
                                         <button className="e-btn mt-6 w-100">
-                                            {" "}
+                                            {' '}
                                             <span></span> Sign Up
                                         </button>
                                         <div className="sign__new text-center mt-10">
@@ -283,7 +257,7 @@ const SignUpMain: React.FC = () => {
                 </div>
             </section>
         </main>
-    )
-}
+    );
+};
 
-export default SignUpMain
+export default SignUpMain;

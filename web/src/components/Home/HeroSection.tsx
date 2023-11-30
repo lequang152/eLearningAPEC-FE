@@ -1,6 +1,6 @@
-import Image from "next/image"
-import Link from "next/link"
-import React from "react"
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
 const Hero: React.FC = () => {
     return (
@@ -35,9 +35,9 @@ const Hero: React.FC = () => {
                             <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                                 <div className="hero__content p-relative z-index-1">
                                     <h3 className="hero__title">
-                                        <span>CÔNG NGHỆ</span>
+                                        <span>HỆ THỐNG</span>
                                         <span className="yellow-shape">
-                                            BBST{" "}
+                                            ELEARNING{' '}
                                             <Image
                                                 width={214}
                                                 height={17}
@@ -45,15 +45,9 @@ const Hero: React.FC = () => {
                                                 alt="yellow-shape"
                                             />
                                         </span>
-                                        ELEARNING APEC GROUP
+                                        APEC GROUP
                                     </h3>
-                                    <p>
-                                        ĐƯỢC VĂN PHÒNG CHÍNH PHỦ GIỚI THIỆU TỚI BỘ GIÁO DỤC & ĐÀO TẠO VÀ UỶ BAN QUỐC GIA
-                                    </p>
-                                    <Link
-                                        href="/"
-                                        className="e-btn"
-                                    >
+                                    <Link href="/" className="e-btn">
                                         Xem tất cả khoá học
                                     </Link>
                                 </div>
@@ -110,7 +104,7 @@ const Hero: React.FC = () => {
                 </div>
             </section>
         </main>
-    )
-}
+    );
+};
 
-export default Hero
+export default Hero;

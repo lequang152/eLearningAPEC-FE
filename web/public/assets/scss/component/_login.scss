@@ -1,4 +1,4 @@
-@use "../abstract" as *;
+@use '../abstract' as *;
 
 /*----------------------------------------*/
 /*  24. LOGIN CSS START
@@ -24,7 +24,7 @@
         & img {
             position: absolute;
             z-index: -1;
-            &.man-1 {
+            &.study {
                 left: 22%;
                 top: 60%;
                 z-index: 1;
@@ -47,7 +47,7 @@
                     display: none;
                 }
             }
-            &.man-2 {
+            &.elearning {
                 right: 22%;
                 top: 65%;
                 @media #{$xxl} {
@@ -68,9 +68,7 @@
                     z-index: 1;
                 }
                 @media #{$sm} {
-                    top: 30%;
-                    right: 0%;
-                    z-index: 1;
+                    display: none;
                 }
                 @media #{$xs} {
                     display: none;
@@ -259,7 +257,7 @@
         font-size: 16px;
         &::after {
             position: absolute;
-            content: "";
+            content: '';
             left: -55%;
             top: 45%;
             @include transform(translateY(-50%));
@@ -364,7 +362,7 @@
                 border-color: transparent;
                 &::after {
                     box-sizing: border-box;
-                    content: "";
+                    content: '';
                     position: absolute;
                     font-size: 10px;
                     color: #ffffff;

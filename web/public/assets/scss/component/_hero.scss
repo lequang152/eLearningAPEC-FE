@@ -1,4 +1,4 @@
-@use "../abstract" as *;
+@use '../abstract' as *;
 
 /*----------------------------------------*/
 /*  03. HERO CSS START
@@ -6,7 +6,7 @@
 
 .hero {
     &__height {
-        min-height: 950px;
+        min-height: 900px;
 
         @media #{$lg} {
             min-height: 850px;

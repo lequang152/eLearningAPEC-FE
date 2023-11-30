@@ -1,36 +1,36 @@
-"use client"
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import React, { useEffect, useRef, useState } from "react"
-import BurgerMenus from "./BurgerMenus"
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
+import BurgerMenus from './BurgerMenus';
 
 const HeaderFour: React.FC = () => {
-    const [menuOpen, setMenuOpen] = useState(false)
-    const [isSignInPage, setIsSignInPage] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [isSignInPage, setIsSignInPage] = useState(false);
 
-    const pathname = usePathname()
+    const pathname = usePathname();
 
-    const headerRef = useRef<HTMLDivElement>(null)
+    const headerRef = useRef<HTMLDivElement>(null);
 
     const sticky = (e: Event) => {
-        const header = headerRef.current
-        const scrollTop = window.scrollY
-        scrollTop >= 1 ? header?.classList.add("sticky") : header?.classList.remove("sticky")
-    }
+        const header = headerRef.current;
+        const scrollTop = window.scrollY;
+        scrollTop >= 1 ? header?.classList.add('sticky') : header?.classList.remove('sticky');
+    };
 
     useEffect(() => {
-        window.addEventListener("scroll", sticky)
+        window.addEventListener('scroll', sticky);
 
         // Hủy đăng ký sự kiện khi component unmount
         return () => {
-            window.removeEventListener("scroll", sticky)
-        }
-    }, [])
+            window.removeEventListener('scroll', sticky);
+        };
+    }, []);
 
     useEffect(() => {
-        pathname === "/sign-in" ? setIsSignInPage(true) : setIsSignInPage(false)
-    }, [pathname])
+        pathname === '/sign-in' ? setIsSignInPage(true) : setIsSignInPage(false);
+    }, [pathname]);
 
     return (
         <React.Fragment>
@@ -54,9 +54,9 @@ const HeaderFour: React.FC = () => {
                                     <div className="logo">
                                         <Link href="/">
                                             <Image
-                                                width={500}
-                                                height={64}
-                                                src="/assets/img/logo/odin-logo-login.png"
+                                                width={200}
+                                                height={50}
+                                                src="/assets/img/logo/logoApec.png"
                                                 alt="logo"
                                             />
                                         </Link>
@@ -71,23 +71,16 @@ const HeaderFour: React.FC = () => {
                                                 <li className="has-dropdown1">
                                                     <Link href="/">Home</Link>
                                                 </li>
-                                               
                                             </ul>
                                         </nav>
                                     </div>
                                     <div className="header__btn header__btn-2 ml-50 d-none d-sm-block">
                                         {isSignInPage ? (
-                                            <Link
-                                                href="/sign-up"
-                                                className="e-btn"
-                                            >
+                                            <Link href="/sign-up" className="e-btn">
                                                 Sign Up
                                             </Link>
                                         ) : (
-                                            <Link
-                                                href="/sign-in"
-                                                className="e-btn"
-                                            >
+                                            <Link href="/sign-in" className="e-btn">
                                                 Sign In
                                             </Link>
                                         )}
@@ -97,7 +90,7 @@ const HeaderFour: React.FC = () => {
                                             className="sidebar-toggle-btn ml-30"
                                             id="sidebar-toggle"
                                             onClick={() => {
-                                                setMenuOpen(!menuOpen)
+                                                setMenuOpen(!menuOpen);
                                             }}
                                         >
                                             <span className="line"></span>
@@ -111,17 +104,14 @@ const HeaderFour: React.FC = () => {
                     </div>
                 </div>
 
-                <BurgerMenus
-                    menuOpen={menuOpen}
-                    setMenuOpen={setMenuOpen}
-                />
+                <BurgerMenus menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                 <div
                     onClick={() => setMenuOpen(false)}
-                    className={menuOpen ? "body-overlay show" : "body-overlay"}
+                    className={menuOpen ? 'body-overlay show' : 'body-overlay'}
                 ></div>
             </header>
         </React.Fragment>
-    )
-}
+    );
+};
 
-export default HeaderFour
+export default HeaderFour;
