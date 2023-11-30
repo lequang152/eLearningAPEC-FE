@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
                                                 alt="yellow-shape"
                                             />
                                         </span>
-                                        Anh Văn siêu tốc
+                                        ELEARNING APEC GROUP
                                     </h3>
                                     <p>
                                         ĐƯỢC VĂN PHÒNG CHÍNH PHỦ GIỚI THIỆU TỚI BỘ GIÁO DỤC & ĐÀO TẠO VÀ UỶ BAN QUỐC GIA
@@ -85,7 +85,7 @@ const Hero: React.FC = () => {
                                     </div>
                                     <div className="hero__thumb-big mr-30">
                                         <Image
-                                            src="/assets/img/hero/hero-1.png"
+                                            src="/assets/img/hero/apec.jpeg"
                                             alt="img not found"
                                             width={400}
                                             height={400}
@@ -97,9 +97,9 @@ const Hero: React.FC = () => {
                                     </div>
                                     <div className="hero__thumb-sm mt-12 d-none d-lg-block">
                                         <Image
-                                            width={200}
-                                            height={240}
-                                            src="/assets/img/hero/hero-sm-1.png"
+                                            width={250}
+                                            height={290}
+                                            src="/assets/img/hero/logoApec.jpg"
                                             alt="img not found"
                                         />
                                     </div>

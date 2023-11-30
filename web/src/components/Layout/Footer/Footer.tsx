@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
                                             <ul>
                                                 <li>
                                                     <Link
-                                                        href="https://www.facebook.com/TheODINLanguage"
+                                                        href="#"
                                                         target="_blank"
                                                     >
                                                         <i className="fab fa-facebook-f"></i>
@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
                                                 </li> */}
                                                 <li>
                                                     <Link
-                                                        href="https://www.youtube.com/@odinlanguageacademy4990"
+                                                        href="#"
                                                         className="pin"
                                                     >
                                                         <i className="fab fa-youtube"></i>

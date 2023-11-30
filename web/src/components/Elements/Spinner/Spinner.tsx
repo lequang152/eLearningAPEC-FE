@@ -17,7 +17,7 @@ function Spinner({ message }: Props) {
             <div className={style["loader-container"]}>
                 <div className={style["spinner"]}></div>
                 <div className={style["brand-name"]}>
-                    <div>{message || "Odin Academy"}</div>
+                    <div>{message || "Apec Academy"}</div>
                     <span className={style["dot-container"]}>
                         <span className={style["dot-1"]}>.</span>
                         <span className={style["dot-2"]}>.</span>

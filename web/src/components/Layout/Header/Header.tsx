@@ -172,7 +172,7 @@ const Header = () => {
                                         <div className="header__btn ml-5 d-none d-sm-block">
                                             <Link
                                                 href="/sign-in"
-                                                className="e-btn text-black"
+                                                className="e-btn text-white"
                                             >
                                                 Sign-in
                                             </Link>
