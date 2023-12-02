@@ -69,7 +69,7 @@ const HeaderFour: React.FC = () => {
                                         <nav id="mobile-menu">
                                             <ul>
                                                 <li className="has-dropdown1">
-                                                    <Link href="/">Home</Link>
+                                                    <Link href="/">Trang Chủ</Link>
                                                 </li>
                                             </ul>
                                         </nav>
@@ -77,11 +77,11 @@ const HeaderFour: React.FC = () => {
                                     <div className="header__btn header__btn-2 ml-50 d-none d-sm-block">
                                         {isSignInPage ? (
                                             <Link href="/sign-up" className="e-btn">
-                                                Sign Up
+                                                Đăng Ký
                                             </Link>
                                         ) : (
                                             <Link href="/sign-in" className="e-btn">
-                                                Sign In
+                                                Đăng Nhập
                                             </Link>
                                         )}
                                     </div>

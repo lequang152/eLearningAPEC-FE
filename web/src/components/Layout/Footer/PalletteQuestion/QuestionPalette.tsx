@@ -1,92 +1,90 @@
-import React, { useState, useEffect, useLayoutEffect } from "react"
-import GlobalVariable from "../../../../utils/GlobalVariable"
-import ButtonQuestion from "./ButtonQuestion"
-import Box from "@mui/material/Box"
-import MenuBookIcon from "@mui/icons-material/MenuBook"
-import { Drawer } from "@mui/material"
-import styles from "./style.module.css"
-import ReactPaginate from "react-paginate"
-import { Button } from "react-bootstrap"
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import GlobalVariable from '../../../../utils/GlobalVariable';
+import ButtonQuestion from './ButtonQuestion';
+import Box from '@mui/material/Box';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { Drawer } from '@mui/material';
+import styles from './style.module.css';
+import ReactPaginate from 'react-paginate';
+import { Button } from 'react-bootstrap';
 
 function QuestionPalette() {
-    const getLocalStorage = JSON.parse(localStorage.getItem("survey") || "{}")
-    const accessToken = getLocalStorage?.current_input.accessToken
-    const answerToken = getLocalStorage?.current_input.answerToken
-    const getAnswers = getLocalStorage[accessToken][answerToken]?.answers.answers
+    const getLocalStorage = JSON.parse(localStorage.getItem('survey') || '{}');
+    const accessToken = getLocalStorage?.current_input.accessToken;
+    const answerToken = getLocalStorage?.current_input.answerToken;
+    const getAnswers = getLocalStorage[accessToken][answerToken]?.answers.answers;
 
-    const [isDrawerOpen, setDrawerOpen] = useState(false)
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
     const toggleDrawer = () => {
-        setDrawerOpen(!isDrawerOpen)
-    }
+        setDrawerOpen(!isDrawerOpen);
+    };
 
     const styleNormal = {
-        backgroundColor: "",
-        border: "1px solid",
-        borderColor: "green",
-        color: "green",
-        padding: "5px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    }
+        backgroundColor: '',
+        border: '1px solid',
+        borderColor: 'green',
+        color: 'green',
+        padding: '5px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    };
 
     const styleDone = {
-        backgroundColor: "green",
-        border: "1px solid",
-        borderColor: "green",
-        color: "white",
-        padding: "5px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-    }
+        backgroundColor: '#b2e9aa',
+        color: 'green',
+        padding: '5px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    };
 
-    const GlobalVariableInstance = GlobalVariable.getInstance()
-    const getQuestionId = GlobalVariableInstance.getQuestionID()
+    const GlobalVariableInstance = GlobalVariable.getInstance();
+    const getQuestionId = GlobalVariableInstance.getQuestionID();
 
     const handleButtonFocus = (id: number) => {
-        const inputElements = document.getElementsByName(`${id}`)
+        const inputElements = document.getElementsByName(`${id}`);
         if (inputElements && inputElements.length > 0) {
-            inputElements[0].focus()
-            const parentElement = inputElements[0].closest("li")
+            inputElements[0].focus();
+            const parentElement = inputElements[0].closest('li');
             if (parentElement) {
-                parentElement.classList.add(styles.highlight)
+                parentElement.classList.add(styles.highlight);
                 setTimeout(() => {
-                    parentElement.classList.remove(styles.highlight)
-                }, 500)
+                    parentElement.classList.remove(styles.highlight);
+                }, 500);
             }
         }
-    }
+    };
 
     // when questionID length change, isRender change state
-    const [isRender, setIsRender] = useState(getQuestionId.length)
-    const [currentPage, setCurrentPage] = useState(0)
+    const [isRender, setIsRender] = useState(getQuestionId.length);
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
-        setIsRender(getQuestionId.length)
-    }, [getAnswers])
+        setIsRender(getQuestionId.length);
+    }, [getAnswers]);
 
     //re-render Button
     useLayoutEffect(() => {
-        setCurrentPage(0)
-    }, [isRender])
+        setCurrentPage(0);
+    }, [isRender]);
 
-    const itemsPerPage = 10
+    const itemsPerPage = 10;
 
     const handlePageChange = (selectedPage: any) => {
-        setCurrentPage(selectedPage.selected)
-    }
+        setCurrentPage(selectedPage.selected);
+    };
 
     const renderButton = getQuestionId
         .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
         .map((id, index) => {
-            const answer = getAnswers && getAnswers[id]
-            const label = answer?.label
+            const answer = getAnswers && getAnswers[id];
+            const label = answer?.label;
             return (
                 label && (
                     <ButtonQuestion
                         onClick={() => {
-                            handleButtonFocus(id)
+                            handleButtonFocus(id);
                         }}
                         styleButton={
                             answer?.value?.length === 0 || answer?.value === undefined ? styleNormal : styleDone
@@ -96,10 +94,10 @@ function QuestionPalette() {
                         {label}
                     </ButtonQuestion>
                 )
-            )
-        })
+            );
+        });
 
-    const pageCount = Math.ceil(getQuestionId.length / itemsPerPage)
+    const pageCount = Math.ceil(getQuestionId.length / itemsPerPage);
 
     return (
         <div>
@@ -114,12 +112,12 @@ function QuestionPalette() {
                     anchor="left"
                     PaperProps={{
                         style: {
-                            width: "80px",
-                            backgroundColor: "rgb(251 216 63)",
-                            display: "flex",
-                            gap: "8px",
-                            justifyContent: "center",
-                            padding: "10px",
+                            width: '80px',
+                            backgroundColor: 'rgb(251 216 63)',
+                            display: 'flex',
+                            gap: '8px',
+                            justifyContent: 'center',
+                            padding: '10px',
                         },
                     }}
                 >
@@ -130,10 +128,10 @@ function QuestionPalette() {
             <div className="hidden buttonPallette:flex">
                 <Box
                     sx={{
-                        padding: "10px",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        maxHeight: "55px",
+                        padding: '10px',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        maxHeight: '55px',
                     }}
                 >
                     {renderButton}
@@ -145,16 +143,16 @@ function QuestionPalette() {
                                     disabled={currentPage === 0}
                                     variant="success"
                                     style={{
-                                        borderRadius: "50%",
-                                        width: "30px",
-                                        height: "30px",
-                                        padding: "0",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
+                                        borderRadius: '50%',
+                                        width: '30px',
+                                        height: '30px',
+                                        padding: '0',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
                                     }}
                                 >
-                                    <span style={{ marginTop: "-2px", marginRight: "2px" }}>&lt;</span>
+                                    <span style={{ marginTop: '-2px', marginRight: '2px' }}>&lt;</span>
                                 </Button>
                             }
                             nextLabel={
@@ -162,24 +160,24 @@ function QuestionPalette() {
                                     disabled={currentPage === pageCount - 1}
                                     variant="success"
                                     style={{
-                                        borderRadius: "50%",
-                                        width: "30px",
-                                        height: "30px",
-                                        padding: "0",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
+                                        borderRadius: '50%',
+                                        width: '30px',
+                                        height: '30px',
+                                        padding: '0',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
                                     }}
                                 >
-                                    <span style={{ marginTop: "-2px", marginLeft: "2px" }}>&gt;</span>
+                                    <span style={{ marginTop: '-2px', marginLeft: '2px' }}>&gt;</span>
                                 </Button>
                             }
-                            breakLabel={"..."}
+                            breakLabel={'...'}
                             pageCount={pageCount}
                             marginPagesDisplayed={-1}
                             pageRangeDisplayed={-1}
                             onPageChange={handlePageChange}
-                            containerClassName={"pagination"}
+                            containerClassName={'pagination'}
                             renderOnZeroPageCount={null}
                         />
                     ) : (
@@ -188,7 +186,7 @@ function QuestionPalette() {
                 </Box>
             </div>
         </div>
-    )
+    );
 }
 
-export default QuestionPalette
+export default QuestionPalette;

@@ -110,7 +110,7 @@ export const ConfirmModal = ({
                                             handleClose(value);
                                         }}
                                     >
-                                        {textOk ?? 'Cancel'}
+                                        {textOk ?? 'Hủy'}
                                     </button>
                                 )}
                             </div>

@@ -1,4 +1,4 @@
-@use "../abstract" as *;
+@use '../abstract' as *;
 .link-btn,
 a {
     cursor: pointer;
@@ -11,6 +11,7 @@ a {
 }
 .course {
     &__area {
+        background-color: $border-9;
     }
     &__item {
         @include border-radius(6px);
@@ -549,7 +550,7 @@ a {
 
                 &::after {
                     position: absolute;
-                    content: "";
+                    content: '';
                     bottom: -5px;
                     left: 10px;
                     width: 0;
@@ -700,7 +701,7 @@ a {
                         margin: 0px !important;
 
                         & .nav-link {
-                            background: $green-1;
+                            background: $e-yellow;
                             color: $white;
                         }
                     }
@@ -731,7 +732,7 @@ a {
 
             &::before {
                 position: absolute;
-                content: " ";
+                content: ' ';
                 display: inline-block;
                 border-bottom: 1px solid #53545b;
                 border-right: 1px solid #53545b;
@@ -901,7 +902,7 @@ a {
 
                     &::after {
                         box-sizing: border-box;
-                        content: "";
+                        content: '';
                         position: absolute;
                         font-size: 10px;
                         color: #ffffff;
@@ -1413,7 +1414,7 @@ a {
 
             &::after {
                 position: absolute;
-                content: "";
+                content: '';
                 right: 0;
                 top: -5px;
                 width: 1px;
@@ -1498,7 +1499,7 @@ a {
 
             &::after {
                 position: absolute;
-                content: "";
+                content: '';
                 left: 0;
                 top: 0;
                 width: 100%;
@@ -1559,7 +1560,7 @@ a {
                     i {
                         transform: translateY(0px);
                         display: inline-block;
-                        color: $green-1;
+                        color: $red-1;
                         margin-right: 5px;
                     }
 

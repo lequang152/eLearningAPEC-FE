@@ -117,9 +117,8 @@ const SignUpMain: React.FC = () => {
                         <div className="">
                             <div className="section__title-wrapper text-center mb-14">
                                 <h2 className="section__title">
-                                    Create a free <br /> Account
+                                    Tạo Tài Khoản <br /> Miễn phí
                                 </h2>
-                                <p>I&apos;m a subhead that goes with a story.</p>
                             </div>
                         </div>
                     </div>
@@ -135,8 +134,7 @@ const SignUpMain: React.FC = () => {
                       <i className="fab fa-google"></i>Sign Up with Google
                     </a> */}
                                         <p>
-                                            <span>........</span> Or, <Link href="/sign-up">sign up</Link> with your
-                                            email
+                                            <span>........</span> Hoặc, <Link href="/sign-up">đăng nhập</Link> với email
                                             <span> ........</span>{' '}
                                         </p>
                                     </div>
@@ -145,7 +143,7 @@ const SignUpMain: React.FC = () => {
                                 <div className="sign__form">
                                     <form action="#" onSubmit={handleSubmit}>
                                         <div className="sign__input-wrapper mb-6">
-                                            <h5>Your Name</h5>
+                                            <h5>Họ và tên</h5>
                                             <div className="sign__input">
                                                 <div>
                                                     <i className="fas fa-user icon"></i>
@@ -154,7 +152,7 @@ const SignUpMain: React.FC = () => {
                                                         name="name"
                                                         value={formSignUp.name}
                                                         onChange={handleChangeInput}
-                                                        placeholder="Enter your name"
+                                                        placeholder="Nhập tên của bạn..."
                                                     />
                                                 </div>
                                             </div>
@@ -169,13 +167,13 @@ const SignUpMain: React.FC = () => {
                                                         name="username"
                                                         value={formSignUp.username}
                                                         onChange={handleChangeInput}
-                                                        placeholder="Enter your e-mail address"
+                                                        placeholder="Nhập email..."
                                                     />
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="sign__input-wrapper  mb-6">
-                                            <h5>Password</h5>
+                                            <h5>Mật khẩu</h5>
                                             <div className="sign__input">
                                                 <div>
                                                     <i className="fas fa-lock icon"></i>
@@ -184,7 +182,7 @@ const SignUpMain: React.FC = () => {
                                                         name="password"
                                                         value={formSignUp.password}
                                                         onChange={handleChangeInput}
-                                                        placeholder="Password"
+                                                        placeholder="Mật khẩu..."
                                                     />
                                                     {passwordVisible ? (
                                                         <i
@@ -201,7 +199,7 @@ const SignUpMain: React.FC = () => {
                                             </div>
                                         </div>
                                         <div className="sign__input-wrapper  mb-6">
-                                            <h5>Re-Password</h5>
+                                            <h5>Nhập lại mật khẩu</h5>
                                             <div className="sign__input">
                                                 <div>
                                                     <i className="fas fa-lock icon"></i>
@@ -210,7 +208,7 @@ const SignUpMain: React.FC = () => {
                                                         name="rePassword"
                                                         value={formSignUp.rePassword}
                                                         onChange={handleChangeInput}
-                                                        placeholder="Re-Password"
+                                                        placeholder="Nhập lại mật khẩu..."
                                                     />
                                                     {re_passwordVisible ? (
                                                         <i
@@ -236,17 +234,17 @@ const SignUpMain: React.FC = () => {
                                                     onChange={handleAgreeChange}
                                                 />
                                                 <label className="m-check-label" htmlFor="m-agree">
-                                                    I agree to the <a href="#">Terms & Conditions</a>
+                                                    Tôi đồng ý với mọi<a href="#"> điều khoản</a>
                                                 </label>
                                             </div>
                                         </div>
                                         <button className="e-btn mt-6 w-100">
                                             {' '}
-                                            <span></span> Sign Up
+                                            <span></span> Đăng Ký
                                         </button>
                                         <div className="sign__new text-center mt-10">
                                             <p>
-                                                Already have an account ? <Link href="/sign-in">Sign In</Link>
+                                                Bạn đã có tài khoản ? <Link href="/sign-in">Đăng Nhập</Link>
                                             </p>
                                         </div>
                                     </form>

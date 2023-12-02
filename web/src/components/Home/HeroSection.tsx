@@ -47,6 +47,9 @@ const Hero: React.FC = () => {
                                         </span>
                                         APEC GROUP
                                     </h3>
+                                    <p className="italic">
+                                        “Học tập là hạt giống của kiến thức, kiến thức là hạt giống của hạnh phúc.”
+                                    </p>
                                     <Link href="/" className="e-btn">
                                         Xem tất cả khoá học
                                     </Link>

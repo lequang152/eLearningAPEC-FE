@@ -43,7 +43,7 @@ const SignInMain: React.FC = () => {
         dispatch(postLogin(userPost)).then((originalPromiseResult: any) => {
             if (originalPromiseResult.type === 'auth/postLogin/fulfilled') {
                 makeSuccessToast(
-                    `Login success with user ${originalPromiseResult?.payload?.data?.data?.user.username}`,
+                    `Đăng nhập thành công với tài khoản ${originalPromiseResult?.payload?.data?.data?.user.username}`,
                 );
                 localStorage.setItem('TOKEN', originalPromiseResult?.payload?.data?.data?.token);
                 localStorage.setItem('USER', JSON.stringify(originalPromiseResult?.payload?.data?.data?.user));
@@ -51,7 +51,7 @@ const SignInMain: React.FC = () => {
                 return;
             }
             if (originalPromiseResult.type === 'auth/postLogin/rejected') {
-                makeErrorToast('Username or password is not correct!' ?? originalPromiseResult?.error?.message);
+                makeErrorToast('Tên dăng nhập hoặc mật khẩu không đúng' ?? originalPromiseResult?.error?.message);
                 return;
             }
         });
@@ -116,17 +116,17 @@ const SignInMain: React.FC = () => {
                             <div className="">
                                 <div className="section__title-wrapper text-center mb-14">
                                     <h2 className="section__title">
-                                        Sign in to <br /> Apec Elearning.
+                                        Đăng nhập vào <br /> Apec Elearning.
                                     </h2>
                                     <p>
-                                        If you don&apos;t have an account you can{' '}
+                                        Nếu chưa có tài khoản{' '}
                                         <Link
                                             style={{
                                                 color: 'blue',
                                             }}
                                             href="/sign-up"
                                         >
-                                            Register here!
+                                            Đăng ký ở đây!
                                         </Link>
                                     </p>
                                 </div>
@@ -139,7 +139,7 @@ const SignInMain: React.FC = () => {
                                         <div className="sign__in text-center">
                                             <p>
                                                 {' '}
-                                                <span>........</span> Or, <Link href="/sign-in">sign in</Link> with your
+                                                <span>........</span> Hoặc, <Link href="/sign-in">đăng nhập</Link> với
                                                 email
                                                 <span> ........</span>{' '}
                                             </p>
@@ -163,7 +163,7 @@ const SignInMain: React.FC = () => {
                                                 </div>
                                             </div>
                                             <div className="sign__input-wrapper mb-10">
-                                                <h5>Password</h5>
+                                                <h5>Mật khẩu</h5>
                                                 <div className="sign__input">
                                                     <div>
                                                         <i className="fas fa-lock icon"></i>
@@ -198,19 +198,19 @@ const SignInMain: React.FC = () => {
                                                         onChange={handleKeepSignChange}
                                                     />
                                                     <label className="m-check-label" htmlFor="m-agree">
-                                                        Keep me signed in
+                                                        Giữ đăng nhập
                                                     </label>
                                                 </div>
                                                 <div className="sign__forgot">
-                                                    <a href="#">Forgot your password?</a>
+                                                    <a href="#">Quên mật khẩu?</a>
                                                 </div>
                                             </div>
                                             <button className="e-btn mt-6 w-100">
-                                                <span></span> Sign In
+                                                <span></span> Đăng nhập
                                             </button>
                                             <div className="sign__new text-center mt-10">
                                                 <p>
-                                                    You don&apos;t have an account? <Link href="/sign-up">Sign Up</Link>
+                                                    Bạn chưa có tài khoản? <Link href="/sign-up">Đăng ký</Link>
                                                 </p>
                                             </div>
                                         </form>
