@@ -34,15 +34,6 @@ const TimerSection: React.FC<Props> = ({ startTime, deadline, setDisablePage, se
     const GlobalVariableInstance = GlobalVariable.getInstance();
     const dispatch = useDispatch<AppDispatch>();
     const [popover, setPopover] = useState(false);
-    // const [startSection, setStartSection] = useState<any>(() => {
-    //   if (typeof window !== 'undefined' && window.localStorage) {
-    //     if(JSON.parse(localStorage.getItem('pagesCount') || '{}').startSection)
-    //       {
-    //         return JSON.parse(localStorage.getItem('pagesCount') || '{}').startSection
-    //       }
-    //   }
-    //   return {[1]: startTime}
-    // });
 
     const getLocalStorage = JSON.parse(localStorage.getItem('survey') || '{}');
     const accessToken = getLocalStorage.current_input?.accessToken;
@@ -50,100 +41,6 @@ const TimerSection: React.FC<Props> = ({ startTime, deadline, setDisablePage, se
     const getAnswersLocal = answerToken ? getLocalStorage[accessToken][answerToken]?.answers.answers : {};
 
     const intervalRef = useRef<number | null>(null);
-
-    // const [counts, setCounts] = useState<number[]>(() => {
-    //   if (typeof window !== 'undefined' && window.localStorage) {
-    //     const storedPages: any = JSON.parse(localStorage.getItem('pagesCount') || '{}');
-    //     const storedCounts: any[] = storedPages.count
-    //     return Array.isArray(storedCounts) ? storedCounts : [];
-    //   }
-    //   return [];
-    // });
-
-    // const countsRef = useRef<number[]>(counts);
-
-    // useEffect(() => {
-    //   const getLocalStorage = JSON.parse(localStorage.getItem('survey') || '{}');
-    //   const currentInput = getLocalStorage.current_input;
-    //   const pagesCount = JSON.parse(localStorage.getItem('pagesCount') || '{}')
-
-    //   if (currentInput) {
-    //     const initData = currentInput.initialData;
-    //     const totalPages = Object.keys(initData).map((data, index) => index + 1);
-
-    //     let pagesOnLocal = {};
-    //     let newCounts = [...countsRef.current];
-
-    //     totalPages.forEach((selectedPage) => {
-    //         newCounts[selectedPage - 1] = countsRef.current[selectedPage - 1] || 0;
-
-    //         pagesOnLocal = {
-    //           ...pagesOnLocal,
-    //           [selectedPage]: newCounts[selectedPage - 1],
-    //         };
-
-    //         if (selectedPage === deadline.page) {
-    //           newCounts[deadline.page - 1] += 1;
-
-    //           pagesOnLocal = {
-    //               ...pagesOnLocal,
-    //               [selectedPage]: newCounts[selectedPage - 1],
-    //           };
-    //         }
-    //     });
-
-    //     const newPagesCount = {
-    //       ...pagesCount,
-    //       'page': pagesOnLocal,
-    //       'count': newCounts
-    //     }
-
-    //     localStorage.setItem("pagesCount", JSON.stringify(newPagesCount));
-
-    //     // Cập nhật giá trị countsRef để giữ giá trị mà không trigger re-render
-    //     countsRef.current = newCounts;
-
-    //     // Trigger re-render bằng cách cập nhật state counts
-    //     setCounts(newCounts);
-    //   }
-    // }, [deadline.page])
-
-    // useEffect(() => {
-    //   const pagesCount = {
-    //     ...JSON.parse(localStorage.getItem('pagesCount') || '{}'),
-    //     'startSection': startSection,
-    //   };
-
-    //   localStorage.setItem("pagesCount", JSON.stringify(pagesCount));
-    // }, [startSection]);
-
-    // useEffect(() => {
-    //   if(counts[deadline.page - 1] === 1) {
-    //     const timeStartSection = new Date()
-
-    //     setStartSection((prevStartSection: any) => ({
-    //       ...prevStartSection,
-    //       [deadline.page]: timeStartSection,
-    //     }));
-
-    //   }
-    // }, [counts])
-
-    // useEffect(() => {
-    //   const calculateTimeSection = new Date(startSection[deadline.page]).getTime() + deadline.timeLimit * 60 * 1000 - new Date().getTime()
-    //   if(calculateTimeSection <= 0) {
-    //     setTimeOutSection((prev: any) => ({
-    //       ...prev,
-    //       [deadline.page]: true
-    //     }))
-    //   } else {
-    //     setTimeOutSection((prev: any) => ({
-    //       ...prev,
-    //       [deadline.page]: false
-    //     }))
-    //   }
-
-    // }, [deadline.page, startSection])
 
     const onVisibilityChange = () => {
         if (!document.hidden) {
@@ -302,7 +199,7 @@ const TimerSection: React.FC<Props> = ({ startTime, deadline, setDisablePage, se
                             arrowClassName="popover-arrow"
                         >
                             <div style={{ backgroundColor: '#00ab6b', color: 'white', padding: 4 }}>
-                                Hurry up! Only one minute left!
+                                Chú ý! Thời gian còn lại là 1 phút
                             </div>
                         </ArrowContainer>
                     )}

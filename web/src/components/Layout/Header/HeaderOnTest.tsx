@@ -134,8 +134,8 @@ const HeaderTest = ({
         <React.Fragment>
             {popUp && (
                 <ConfirmModal
-                    header="Submit your exam."
-                    message="Are you sure to submit this exam?"
+                    header="Nộp bài."
+                    message="Bạn chắc chắn muốn nộp bài thi ?"
                     handleClose={handleClosePopUp}
                     handleSubmit={() => {
                         handleSubmit({
@@ -181,8 +181,8 @@ const HeaderTest = ({
 
             {popUpHome && (
                 <ConfirmModal
-                    header="Do you want to return to home page?"
-                    message="Some changes may be lost."
+                    header="Bạn có muốn quay về trang chủ không ?"
+                    message="Một số thay đổi có thể bị mất ."
                     handleClose={handleClosePopUpHome}
                     handleSubmit={() => router.push('/')}
                 />

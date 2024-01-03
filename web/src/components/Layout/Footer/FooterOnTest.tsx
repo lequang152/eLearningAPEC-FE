@@ -129,7 +129,7 @@ const FooterTest = ({ setPage, hasNextPage, currentPage, changeSection, isLimitS
                         onClick={() => {
                             setDirectionPage(false);
                             if (GlobalVariableInstance.getIsPlaying()) {
-                                setTitleModal('You will lose one play. Are you sure you want to move to another page?');
+                                setTitleModal('Bạn sẽ mất 1 lượt nghe. Bạn chắc chắn muốn chuyển trang ?');
                                 handleOpenModal();
                             } else {
                                 setPage(currentPage - 1);
@@ -149,7 +149,7 @@ const FooterTest = ({ setPage, hasNextPage, currentPage, changeSection, isLimitS
                             if (changeSection) {
                                 if (isLimitSectionTime) {
                                     setTitleModal(
-                                        'If you proceed to the next page, the timer will continue for the new test. Do you want to continue?',
+                                        'Nếu bạn chuyển sang, thời gian sẽ tính cho cả phần tiếp theo. Tiếp tục chuyển trang ?',
                                     );
                                     handleOpenModal();
                                 } else {
@@ -158,7 +158,7 @@ const FooterTest = ({ setPage, hasNextPage, currentPage, changeSection, isLimitS
                                     saveAnswersToBackend();
                                 }
                             } else if (GlobalVariableInstance.getIsPlaying()) {
-                                setTitleModal('You will lose one play. Are you sure you want to move to another page?');
+                                setTitleModal('Bạn sẽ mất 1 lượt nghe. Bạn chắc chắn muốn chuyển trang ?');
                                 handleOpenModal();
                             } else {
                                 setPage(currentPage + 1);

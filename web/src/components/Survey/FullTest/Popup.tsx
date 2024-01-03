@@ -112,7 +112,8 @@ function Popup({ idSurveyDetails }: PropsSurvey) {
                                         localStorage.clear();
                                         dispatch(logOut());
                                         makeErrorToast(
-                                            (err.response && err.response.data.message) || 'Error, please login again!',
+                                            (err.response && err.response.data.message) ||
+                                                'Có lỗi, vui lòng đăng nhập lại!',
                                         );
                                         router.push('/sign-in');
                                     })
@@ -123,7 +124,7 @@ function Popup({ idSurveyDetails }: PropsSurvey) {
                             }
                             if (originalPromiseResult.type === 'auth/refreshToken/rejected') {
                                 makeErrorToast(
-                                    (err.response && err.response.data.message) || 'Error, please login again!',
+                                    (err.response && err.response.data.message) || 'Có lỗi, vui lòng đăng nhập lại!',
                                 );
                                 localStorage.clear();
                                 dispatch(logOut());
@@ -140,7 +141,7 @@ function Popup({ idSurveyDetails }: PropsSurvey) {
                         };
                         local.set([], SURVEY_INPUT_KEY, newData);
                         setInputFromLocal(newData);
-                        makeErrorToast((err.response && err.response.data.message) || 'Error, please try again!');
+                        makeErrorToast((err.response && err.response.data.message) || 'Có lỗi, vui lòng thử lại');
                     }
                 })
                 .finally(() => {
@@ -163,7 +164,7 @@ function Popup({ idSurveyDetails }: PropsSurvey) {
             {isShow && (
                 <ConfirmModal
                     header="Warning"
-                    message={`${inputFromLocal.answerToken ? 'Continue this test?' : 'Are you ready for the Test ?'}`}
+                    message={`${inputFromLocal.answerToken ? 'Tiếp tục bài thi?' : 'Bạn đã sẵn sàng làm bài thi ?'}`}
                     handleSubmit={(code) => {
                         handleStartTest(
                             inputFromLocal.accessToken,
@@ -179,7 +180,7 @@ function Popup({ idSurveyDetails }: PropsSurvey) {
                     }}
                     handleClose={() => closeModal()}
                     useInputBox={inputFromLocal.answerToken ? false : true}
-                    inputBoxLabel="Exam code (optional)"
+                    inputBoxLabel="Mã đề thi"
                 />
             )}
             <Image
@@ -237,7 +238,7 @@ function Popup({ idSurveyDetails }: PropsSurvey) {
                             color="error"
                             onClick={handleCreateInputExam}
                         >
-                            Start
+                            Bắt đầu
                         </Button>
                     </div>
                 </div>
