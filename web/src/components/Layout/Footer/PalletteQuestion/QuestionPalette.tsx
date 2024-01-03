@@ -45,13 +45,26 @@ function QuestionPalette() {
     const handleButtonFocus = (id: number) => {
         const inputElements = document.getElementsByName(`${id}`);
         if (inputElements && inputElements.length > 0) {
-            inputElements[0].focus();
             const parentElement = inputElements[0].closest('li');
             if (parentElement) {
                 parentElement.classList.add(styles.highlight);
+                parentElement.scrollIntoView({ behavior: 'smooth' });
                 setTimeout(() => {
                     parentElement.classList.remove(styles.highlight);
                 }, 500);
+                //inputElements[0].focus();
+            }
+        } else {
+            const divElement = document.getElementById(`id-${id}`);
+            if (divElement) {
+                const parentElement = divElement.closest('li');
+                if (parentElement) {
+                    parentElement.classList.add(styles.highlight);
+                    parentElement.scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                        parentElement.classList.remove(styles.highlight);
+                    }, 500);
+                }
             }
         }
     };
@@ -140,8 +153,8 @@ function QuestionPalette() {
                             className="flex gap-2 items-center"
                             previousLabel={
                                 <Button
+                                    className="btn-success"
                                     disabled={currentPage === 0}
-                                    variant="success"
                                     style={{
                                         borderRadius: '50%',
                                         width: '30px',
@@ -150,6 +163,8 @@ function QuestionPalette() {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
+                                        backgroundColor: '#198754',
+                                        borderColor: '#198754',
                                     }}
                                 >
                                     <span style={{ marginTop: '-2px', marginRight: '2px' }}>&lt;</span>
@@ -157,8 +172,8 @@ function QuestionPalette() {
                             }
                             nextLabel={
                                 <Button
+                                    className="btn-success"
                                     disabled={currentPage === pageCount - 1}
-                                    variant="success"
                                     style={{
                                         borderRadius: '50%',
                                         width: '30px',
@@ -167,6 +182,8 @@ function QuestionPalette() {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
+                                        backgroundColor: '#198754',
+                                        borderColor: '#198754',
                                     }}
                                 >
                                     <span style={{ marginTop: '-2px', marginLeft: '2px' }}>&gt;</span>

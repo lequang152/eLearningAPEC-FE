@@ -7,6 +7,7 @@ import GlobalVariable from '../../../utils/GlobalVariable';
 import Box from '@mui/system/Box';
 import Modal from '@mui/material/Modal';
 import DirectOnPanel from './DirectOnPanel';
+import { text } from 'stream/consumers';
 
 type Props = {
     questions: Question[];

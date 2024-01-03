@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Drawer } from '@mui/material';
 import { Resizable } from 're-resizable';
 import { ResizeCallback } from 're-resizable';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import { Popover, ArrowContainer } from 'react-tiny-popover';
 
 function NoteBook() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -25,11 +27,54 @@ function NoteBook() {
         setDrawerWidth(parseInt(newWidth));
     };
 
+    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
     return (
-        <div>
-            <button className="px-4 py-1 flex items-center rounded bg-[#37854D]" onClick={toggleDrawer}>
-                Notebook
-            </button>
+        <div className="flex">
+            <Popover
+                containerStyle={{
+                    zIndex: '99',
+                }}
+                isOpen={isPopoverOpen}
+                positions={['top', 'bottom', 'left', 'right']}
+                onClickOutside={() => setIsPopoverOpen(false)}
+                content={({ position, childRect, popoverRect }) => (
+                    <ArrowContainer
+                        position={position}
+                        childRect={childRect}
+                        popoverRect={popoverRect}
+                        arrowColor={'#00ab6b'}
+                        arrowSize={3}
+                        className="popover-arrow-container"
+                        arrowClassName="popover-arrow"
+                    >
+                        <div
+                            style={{
+                                fontSize: '12px',
+                                backgroundColor: '#00ab6b',
+                                color: 'white',
+                                paddingLeft: 6,
+                                paddingRight: 6,
+                                borderRadius: 6,
+                            }}
+                        >
+                            Notebook
+                        </div>
+                    </ArrowContainer>
+                )}
+            >
+                <button
+                    className="px-4 py-1 flex items-center rounded bg-green-700"
+                    onClick={toggleDrawer}
+                    onMouseEnter={() => {
+                        setIsPopoverOpen(true);
+                    }}
+                    onMouseLeave={() => setIsPopoverOpen(false)}
+                >
+                    <EditNoteIcon />
+                </button>
+            </Popover>
+            ;
             <Drawer
                 open={isDrawerOpen}
                 onClose={toggleDrawer}

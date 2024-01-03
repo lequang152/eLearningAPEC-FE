@@ -1,7 +1,7 @@
 'use client';
 import axios, { AxiosHeaders } from 'axios';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { SplitPane } from 'react-collapse-pane';
 import { useSelector } from 'react-redux';
 import { SurveyQuestionType } from '../../../constants/QuestionType';
@@ -24,6 +24,8 @@ import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import GlobalVariable from '../../../utils/GlobalVariable';
 import { ApiService } from '../../../utils/api_service';
 import { useQueryState } from 'next-usequerystate';
+import { Box } from '@mui/material';
+import DirectOnPanel from './DirectOnPanel';
 
 type ErrorState = {
     err: boolean;
@@ -75,24 +77,16 @@ const FullTest: React.FC<any> = ({ params }) => {
     const [normalQuestion, setNormalQuestion] = useState<Question[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [windowWidth, setWindowWidth] = useState(0);
+    const [deadline, setDeadline] = useState<any>({});
+    const [disablePage, setDisablePage] = useState<any>({});
+    const [changeSection, setChangeSection] = useState(false);
+    const [isLimitSectionTime, setIsLimitSectionTime] = useState(false);
 
     const [isError, setIsError] = useState<ErrorState>({
         err: false,
         message: undefined,
     });
 
-    const userInfo = useSelector(userAuthSelector);
-    if (!params.slug || !params.slug[0] || !params.slug[1]) {
-        return (
-            <ConfirmModal
-                header="Params not found!"
-                message="This happends when you are mispassing some args to url."
-                handleSubmit={() => {
-                    return;
-                }}
-            />
-        );
-    }
     const handleResize = () => {
         setWindowWidth(window.innerWidth);
     };
@@ -108,6 +102,18 @@ const FullTest: React.FC<any> = ({ params }) => {
 
         getFullTestQuestions
             .then((res) => {
+                const deadlineTime = res.data.data.pages[0].page.deadline;
+                const currentSectionId = res.data.data.pages[0].page.tagId;
+                const nextSectionId = res.data?.nextSection?.tagId;
+                setChangeSection(currentSectionId !== nextSectionId);
+                setIsLimitSectionTime(res.data.data.pages[0].page.limitSectionTime > 0);
+
+                setDeadline((prev: any) => ({
+                    ...prev,
+                    page: page,
+                    timeLimit: deadlineTime,
+                    isLimitSectionTime: res.data.data.pages[0].page.limitSectionTime > 0,
+                }));
                 GlobalVariable.getInstance().setScoringType(res.data?.scoringType);
                 let data = res.data.data.pages;
 
@@ -171,11 +177,10 @@ const FullTest: React.FC<any> = ({ params }) => {
                                         });
                                     },
                                     onSubmitDone: () => {
-                                        // remove local data
+                                        //remove local data
                                         local.remove([input.accessToken], input.answerToken);
                                         input.answerToken = undefined;
                                         local.set([], SURVEY_INPUT_KEY, input);
-                                        router.push('/');
                                     },
                                     onSubmitSuccess: () => {
                                         GlobalVariable.getInstance().setIsSubmitted(true);
@@ -204,11 +209,35 @@ const FullTest: React.FC<any> = ({ params }) => {
         setMounted(true);
         handleResize();
         window.addEventListener('resize', handleResize);
+        const getLocalStorage = JSON.parse(localStorage.getItem('survey') || '{}');
+        const currentInput = getLocalStorage.current_input;
+        if (currentInput) {
+            const initData = currentInput?.initialData;
+            const objects: { [key: string]: any } = initData;
+            let sortedObjectsArray = [];
+
+            const sortedObjects = Object.entries(objects).sort((a, b) => a[1].sequence - b[1].sequence);
+            sortedObjectsArray = sortedObjects.map(([key, value]) => ({ [key]: value }));
+            GlobalVariable.getInstance().setPagesData(sortedObjectsArray);
+        }
 
         return () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    const userInfo = useSelector(userAuthSelector);
+    if (!params.slug || !params.slug[0] || !params.slug[1]) {
+        return (
+            <ConfirmModal
+                header="Params not found!"
+                message="This happends when you are mispassing some args to url."
+                handleSubmit={() => {
+                    return;
+                }}
+            />
+        );
+    }
 
     return (
         <>
@@ -224,18 +253,66 @@ const FullTest: React.FC<any> = ({ params }) => {
                             state={state}
                             timeLimit={{
                                 isTimeLimit: currentInput.isTimeLimited,
-                                timeLimit: currentInput.timeLimit,
+                                deadline: deadline,
                                 startDateTime: currentInput.startDateTime,
                             }}
                             hasNextPage={paginateData.hasNextPage}
+                            currentPage={page}
+                            setDisablePage={setDisablePage}
+                            setChangeSection={setChangeSection}
                         />
                         {specialQuestion.length === 0 ? (
                             <div className="fulltest__section w-full h-4/6 flex-grow flex  item justify-center relative">
+                                <div>
+                                    <Box
+                                        component="section"
+                                        sx={{
+                                            p: 1,
+                                            display: 'flex',
+                                            fontSize: 12,
+                                            flexWrap: 'wrap',
+                                            color: 'black',
+                                            padding: '14px',
+                                        }}
+                                    >
+                                        {GlobalVariable.getInstance()
+                                            .getPagesData()
+                                            .map((data, index) => {
+                                                const dataSection = data[Object.keys(data)[0]];
+                                                let textContent;
+                                                const htmlString = dataSection.title?.en_US;
+                                                if (htmlString) {
+                                                    const parser = new DOMParser();
+                                                    const document = parser.parseFromString(htmlString, 'text/html');
+                                                    const pTextContent = document.querySelector('p')?.textContent;
+                                                    if (!pTextContent) {
+                                                        const h3TextContent = document.querySelector('h3')?.textContent;
+                                                        textContent = h3TextContent?.toUpperCase();
+                                                    } else textContent = pTextContent?.toUpperCase();
+                                                    if (!textContent) {
+                                                        textContent = htmlString.toUpperCase();
+                                                    }
+                                                }
+                                                return textContent ? (
+                                                    <DirectOnPanel
+                                                        key={index}
+                                                        index={index}
+                                                        page={page}
+                                                        textContent={textContent}
+                                                        setPage={setPage}
+                                                    />
+                                                ) : (
+                                                    <></>
+                                                );
+                                            })}
+                                    </Box>
+                                </div>
                                 <PannelRight
                                     questions={normalQuestion}
                                     state={state}
                                     isExpand={specialQuestion.length == 0}
                                     hasPanelLeft={false}
+                                    disablePage={disablePage[page]}
                                 />
                             </div>
                         ) : (
@@ -254,6 +331,7 @@ const FullTest: React.FC<any> = ({ params }) => {
                                         state={state}
                                         isExpand={specialQuestion.length == 0}
                                         hasPanelLeft={true}
+                                        disablePage={disablePage[page]}
                                     />
                                 </SplitPane>
                             </div>
@@ -266,6 +344,8 @@ const FullTest: React.FC<any> = ({ params }) => {
                             currentPage={paginateData.currentPage}
                             setPage={setPage}
                             param={params.slug}
+                            changeSection={changeSection}
+                            isLimitSectionTime={isLimitSectionTime}
                         />
                     </div>
                 )

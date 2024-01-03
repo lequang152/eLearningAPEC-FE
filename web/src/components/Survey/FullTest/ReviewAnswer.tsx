@@ -60,7 +60,7 @@ function ReviewAnswer({ params }: { params: Params }) {
                             className="text-green-700 bg-green-100 font-bold text-2xl border-8 
                 border-green-600 w-36 h-36 flex flex-col items-center justify-center rounded-full"
                         >
-                            {GlobalVariableInstance.getReviewAnswerData().percentage}
+                            {Number(GlobalVariableInstance.getReviewAnswerData().percentage.toFixed(2))}
                         </div>
                         <div className="border-4 w-32 h-32 flex flex-col items-center justify-center rounded-full">
                             <AccessAlarmsIcon sx={{ color: 'green' }} />

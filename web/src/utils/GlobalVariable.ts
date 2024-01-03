@@ -1,168 +1,186 @@
 class GlobalVariable {
-  private static instance: GlobalVariable;
-  private questionID: any[];
-  private myRef: any;
-  private title: string[];
-  private isPlaying: boolean;
-  private totalQuestions: any[];
-  private isSubmitted: boolean;
-  private answers: any
-  private timeLimit: number
-  private timeDoTest: number
-  private reviewAnswerData: any;
-  private scoringType: string;
-  private answersOnTest: any
-  private pagesData: any[]
+    private static instance: GlobalVariable;
+    private questionID: any[];
+    private myRef: any;
+    private title: string[];
+    private isPlaying: boolean;
+    private totalQuestions: any[];
+    private isSubmitted: boolean;
+    private answers: any;
+    private timeLimit: number;
+    private timeDoTest: number;
+    private reviewAnswerData: any;
+    private scoringType: string;
+    private answersOnTest: any;
+    private pagesData: any[];
+    private questionToCorrect: any;
+    private isTimeLimited: boolean;
 
-  private constructor() {
-    // Initialize the instance
-    this.questionID = [];
-    this.myRef = {};
-    this.title = []
-    this.isPlaying = false
-    this.totalQuestions = []
-    this.isSubmitted = false;
-    this.answers = {}
-    this.timeLimit = 0
-    this.timeDoTest = 0
-    this.reviewAnswerData = {}
-    this.scoringType = ''
-    this.answersOnTest = {}
-    this.pagesData = []
-  }
-
-  public static getInstance(): GlobalVariable {
-    if (!GlobalVariable.instance) {
-      GlobalVariable.instance = new GlobalVariable();
+    private constructor() {
+        // Initialize the instance
+        this.questionID = [];
+        this.myRef = {};
+        this.title = [];
+        this.isPlaying = false;
+        this.totalQuestions = [];
+        this.isSubmitted = false;
+        this.answers = {};
+        this.timeLimit = 0;
+        this.timeDoTest = 0;
+        this.reviewAnswerData = {};
+        this.scoringType = '';
+        this.answersOnTest = {};
+        this.pagesData = [];
+        this.questionToCorrect = {};
+        this.isTimeLimited = false;
     }
-    return GlobalVariable.instance;
-  }
 
-  public getQuestionID(): any[] {
-    return this.questionID;
-  }
-
-  public setQuestionID(newID: number): void {
-    if (!this.questionID.includes(newID)) {
-      this.questionID.push(newID);
+    public static getInstance(): GlobalVariable {
+        if (!GlobalVariable.instance) {
+            GlobalVariable.instance = new GlobalVariable();
+        }
+        return GlobalVariable.instance;
     }
-  }
 
-  public removeQuestionID(): void {
-    this.questionID.splice(0, this.questionID.length);
-  }
-
-  public getTotalQuestions(): any[] {
-    return this.totalQuestions;
-  }
-
-  public setTotalQuestions(id: number): void {
-    if (!this.totalQuestions.includes(id)) {
-      this.totalQuestions.push(id);
+    public getQuestionID(): any[] {
+        return this.questionID;
     }
-  }
 
-  public removeTotalQuestions(): void {
-    this.totalQuestions.splice(0, this.totalQuestions.length);
-  }
+    public setQuestionID(newID: number): void {
+        if (!this.questionID.includes(newID)) {
+            this.questionID.push(newID);
+        }
+    }
 
+    public removeQuestionID(): void {
+        this.questionID.splice(0, this.questionID.length);
+    }
 
-  public getIsPlaying(): boolean {
-    return this.isPlaying
-  }
+    public getTotalQuestions(): any[] {
+        return this.totalQuestions;
+    }
 
-  public setIsPlaying(bool: boolean): void {
-    this.isPlaying = bool;
-  }
+    public setTotalQuestions(id: number): void {
+        if (!this.totalQuestions.includes(id)) {
+            this.totalQuestions.push(id);
+        }
+    }
 
-  public getAnswers(): any {
-    return this.answers
-  }
+    public removeTotalQuestions(): void {
+        this.totalQuestions.splice(0, this.totalQuestions.length);
+    }
 
-  public setAnswers(ans: any) {
-    this.answers = ans
-  }
+    public getIsPlaying(): boolean {
+        return this.isPlaying;
+    }
 
-  public removeAnswers() {
-    this.answers = {}
-  }
+    public setIsPlaying(bool: boolean): void {
+        this.isPlaying = bool;
+    }
 
-  public getMyRef(key: number): any {
-    return this.myRef[key];
-  }
+    public getAnswers(): any {
+        return this.answers;
+    }
 
-  public setMyRef(key: number, value: HTMLLIElement | null) {
-    this.myRef[key] = value;
-  }
+    public setAnswers(ans: any) {
+        this.answers = ans;
+    }
 
-  public getIsSubmitted(): boolean {
-    return this.isSubmitted
-  }
+    public removeAnswers() {
+        this.answers = {};
+    }
 
-  public setIsSubmitted(bool: boolean): void {
-    this.isSubmitted = bool
-  }
+    public getMyRef(key: number): any {
+        return this.myRef[key];
+    }
 
-  public getTimeLimit(): number {
-    return this.timeLimit
-  }
+    public setMyRef(key: number, value: HTMLLIElement | null) {
+        this.myRef[key] = value;
+    }
 
-  public setTimeLimit(timeLimit: number): void {
-    this.timeLimit = timeLimit
-  }
+    public getIsSubmitted(): boolean {
+        return this.isSubmitted;
+    }
 
-  public getTimeDoTest(): number {
-    return this.timeDoTest
-  }
+    public setIsSubmitted(bool: boolean): void {
+        this.isSubmitted = bool;
+    }
 
-  public setTimeDoTest(num: number): void {
-    this.timeDoTest = num
-  }
+    public getTimeLimit(): number {
+        return this.timeLimit;
+    }
 
-  public removeTimeDoTest() {
-    this.timeDoTest = 0
-  }
+    public setTimeLimit(timeLimit: number): void {
+        this.timeLimit = timeLimit;
+    }
 
-  public getReviewAnswerData(): any{
-    return this.reviewAnswerData
-  }
+    public getTimeDoTest(): number {
+        return this.timeDoTest;
+    }
 
-  public setReviewAnswerData(obj: any): void {
-    this.reviewAnswerData = obj
-  }
+    public setTimeDoTest(num: number): void {
+        this.timeDoTest = num;
+    }
 
-  public getScoringType(): string {
-    return this.scoringType
-  }
+    public removeTimeDoTest() {
+        this.timeDoTest = 0;
+    }
 
-  public setScoringType(type: string): void {
-    this.scoringType = type 
-  }
+    public getReviewAnswerData(): any {
+        return this.reviewAnswerData;
+    }
 
-  public getAnswersOnTest() {
-    return this.answersOnTest
-  }
+    public setReviewAnswerData(obj: any): void {
+        this.reviewAnswerData = obj;
+    }
 
-  public setAnswerOnTest(key: number, value: string) {
-    this.answersOnTest[key] = value
-  }
+    public getScoringType(): string {
+        return this.scoringType;
+    }
 
-  public removeAnswerOnTest() {
-    this.answersOnTest = {}
-  }
+    public setScoringType(type: string): void {
+        this.scoringType = type;
+    }
 
-  public getPagesData() {
-    return this.pagesData
-  }
+    public getAnswersOnTest() {
+        return this.answersOnTest;
+    }
 
-  public setPagesData(obj: any[]) {
-    this.pagesData = obj
-  }
+    public setAnswerOnTest(key: number, value: string) {
+        this.answersOnTest[key] = value;
+    }
 
-  public removePageData() {
-    this.pagesData = []
-  }
+    public removeAnswerOnTest() {
+        this.answersOnTest = {};
+    }
 
- }
+    public getPagesData() {
+        return this.pagesData;
+    }
+
+    public setPagesData(obj: any[]) {
+        this.pagesData = obj;
+    }
+
+    public removePageData() {
+        this.pagesData = [];
+    }
+
+    public getQuestionToCorrect() {
+        return this.questionToCorrect;
+    }
+
+    public setQuestionToCorrect(key: number, value: string) {
+        this.questionToCorrect[key] = value;
+    }
+
+    public getIsTimeLimited() {
+        return this.isTimeLimited;
+    }
+
+    public setIsTimeLimited(bool: boolean) {
+        this.isTimeLimited = bool;
+    }
+}
 
 export default GlobalVariable;

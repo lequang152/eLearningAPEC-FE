@@ -1,6 +1,6 @@
 //@ts-nocheck
-import React from "react"
-import TextSelector from "text-selection-react"
+import React from 'react';
+import TextSelector from 'text-selection-react';
 
 const TextSelection = () => {
     return (
@@ -9,14 +9,14 @@ const TextSelection = () => {
             unmarkText="Remove"
             events={[
                 {
-                    text: "Mark",
-                    handler: () => {}
+                    text: 'Mark',
+                    handler: () => {},
                 },
             ]}
-            color={"yellow"}
+            color={'yellow'}
             colorText={true}
         />
-    )
-}
+    );
+};
 
-export default TextSelection
+export default TextSelection;

@@ -75,9 +75,16 @@ export const handleSubmit = async ({
                     const questionId = Number(qid);
                     //  qid chinh la question id do anh oi
                     if (questionId !== 0 && audioBlobs[questionId].blob !== undefined) {
+                        //convert base64 => blob
+                        const fetchData = async () => {
+                            const responseBlob = await fetch(audioBlobs[questionId].blob);
+                            const blobFromBase64 = await responseBlob.blob();
+                            return blobFromBase64; // Trả giá trị từ hàm fetchData
+                        };
+                        const blobFromBase64 = await fetchData();
                         const response = await postToS3AWS({
                             questionId: questionId,
-                            blob: audioBlobs[questionId].blob,
+                            blob: blobFromBase64,
                             answerToken: state.answerToken,
                             extension: 'mp3',
                             username: userInfo.user.username,
@@ -95,6 +102,10 @@ export const handleSubmit = async ({
         }
     })
         .then((responseS3: any) => {
+            for (const item of responseS3) {
+                const id = item.id.toString();
+                state.answers[id].value = item.value;
+            }
             state.answersAudio = undefined;
             const header = {
                 Authorization: `Bearer ${userInfo.token || userLocal.token}`,

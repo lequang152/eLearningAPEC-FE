@@ -26,19 +26,31 @@ import GlobalVariable from '../../../utils/GlobalVariable';
 import { useWindowWidth } from '@react-hook/window-size';
 import { AppDispatch } from '../../../redux/store';
 import { logOut } from '../../../redux/Slice/Auth/authSlice';
+import { Popover, ArrowContainer } from 'react-tiny-popover';
 
 type HeaderTestProps = {
     params: any;
     state: LocalAnswerExam;
     timeLimit?: {
         isTimeLimit: number;
-        timeLimit: number;
+        deadline: any;
         startDateTime: number;
     };
     hasNextPage: boolean;
+    currentPage: number;
+    setDisablePage: (value: any) => void;
+    setChangeSection: (value: any) => void;
 };
 
-const HeaderTest = ({ params, state, timeLimit, hasNextPage }: HeaderTestProps) => {
+const HeaderTest = ({
+    params,
+    state,
+    timeLimit,
+    hasNextPage,
+    currentPage,
+    setDisablePage,
+    setChangeSection,
+}: HeaderTestProps) => {
     const userInfo = useSelector(userAuthSelector);
     const userLocal = JSON.parse(localStorage.getItem('session') || '{}');
     const [popUp, setPopUp] = useState(false);
@@ -55,6 +67,7 @@ const HeaderTest = ({ params, state, timeLimit, hasNextPage }: HeaderTestProps) 
 
     const [numColumns, setNumColumns] = useState(8);
     const windowWidth = useWindowWidth();
+    const [popoverOpen, setPopoverOpen] = useState(false);
 
     useEffect(() => {
         if (windowWidth >= 1115) {
@@ -98,7 +111,8 @@ const HeaderTest = ({ params, state, timeLimit, hasNextPage }: HeaderTestProps) 
     const userAnswer = JSON.parse(localStorage.getItem('answerOnTest') || '{}');
 
     GlobalVariableInstance.setIsSubmitted(false);
-    GlobalVariableInstance.setTimeLimit(timeLimit?.timeLimit || 0);
+    GlobalVariableInstance.setTimeLimit(getLocalStorage?.current_input?.timeLimit || 0);
+    GlobalVariableInstance.setIsTimeLimited(getLocalStorage?.current_input?.isTimeLimited);
 
     const [isSubmit, setIsSubmit] = useState(false);
 
@@ -132,7 +146,6 @@ const HeaderTest = ({ params, state, timeLimit, hasNextPage }: HeaderTestProps) 
                                 setIsSubmit(true);
                                 setPopUp(false);
 
-                                GlobalVariableInstance.setAnswers(getAnswersLocal);
                                 const getTime = getLocalStorage.current_input.startDateTime;
 
                                 const timeDoTest = new Date().getTime() - new Date(getTime).getTime();
@@ -140,6 +153,7 @@ const HeaderTest = ({ params, state, timeLimit, hasNextPage }: HeaderTestProps) 
                                 GlobalVariableInstance.setTimeDoTest(timeDoTest);
 
                                 GlobalVariableInstance.setAnswers(getAnswersLocal);
+                                localStorage.removeItem('pagesCount');
                             },
                             onSubmitDone: () => {
                                 setPopUp(false);
@@ -185,23 +199,69 @@ const HeaderTest = ({ params, state, timeLimit, hasNextPage }: HeaderTestProps) 
                         style={{ height: '100%', width: 'auto' }}
                     />
                 </Link>
-                {timeLimit?.isTimeLimit && (
+                {timeLimit?.isTimeLimit && timeLimit?.deadline?.isLimitSectionTime && (
                     <div
                         className={`text-3xl ${windowWidth < 600 && windowWidth > 400 ? 'text-lg' : ''} 
                     ${windowWidth < 400 ? 'text-sm' : ''}  gap-2 flex flex-row items-center justify-center`}
                     >
                         <TimerOutlinedIcon className="text-yellow-500" />
-                        <TimerSection startTime={timeLimit.startDateTime} timeLimit={timeLimit.timeLimit} />
+                        <TimerSection
+                            startTime={timeLimit.startDateTime}
+                            deadline={timeLimit.deadline}
+                            setDisablePage={setDisablePage}
+                            setChangeSection={setChangeSection}
+                        />
                     </div>
                 )}
                 <div className="text-white flex">
                     {/* Review Answer */}
-                    <Button className={'px-2 text-[#294563] mr-3 rounded'} onClick={() => setShowModal(true)}>
-                        <ContentPasteSearchIcon />
-                    </Button>
+                    <Popover
+                        containerStyle={{
+                            zIndex: '99',
+                        }}
+                        isOpen={popoverOpen}
+                        positions={['top', 'bottom', 'left', 'right']}
+                        onClickOutside={() => setPopoverOpen(false)}
+                        content={({ position, childRect, popoverRect }) => (
+                            <ArrowContainer
+                                position={position}
+                                childRect={childRect}
+                                popoverRect={popoverRect}
+                                arrowColor={'#00ab6b'}
+                                arrowSize={3}
+                                className="popover-arrow-container"
+                                arrowClassName="popover-arrow"
+                            >
+                                <div
+                                    style={{
+                                        fontSize: '12px',
+                                        backgroundColor: '#00ab6b',
+                                        color: 'white',
+                                        paddingLeft: 6,
+                                        paddingRight: 6,
+                                        borderRadius: 6,
+                                    }}
+                                >
+                                    Review Answer
+                                </div>
+                            </ArrowContainer>
+                        )}
+                    >
+                        <Button
+                            onMouseEnter={() => setPopoverOpen(true)}
+                            onMouseLeave={() => setPopoverOpen(false)}
+                            className={'px-2 text-slate-950 mr-3 rounded'}
+                            onClick={() => setShowModal(true)}
+                        >
+                            <ContentPasteSearchIcon />
+                        </Button>
+                    </Popover>
+
                     <div className="rounded">
                         <Modal styles={modalStyle} open={showModal} onClose={() => setShowModal(false)} center>
-                            <h3 className="mt-4 text-center text-[#294563]">Review your answers</h3>
+                            <div className="mt-4 font-bold text-2xl text-center text-[#294563]">
+                                Review your answers
+                            </div>
                             {GlobalVariableInstance.getPagesData().map((data, index) => {
                                 const dataSection = data[Object.keys(data)[0]];
                                 let textContent;

@@ -1,106 +1,106 @@
-"use client"
-import { Dispatch, useEffect, useReducer } from "react"
-import { SurveyQuestionType } from "../constants/QuestionType"
-import { LocalStorageService, SURVEY_KEY } from "../utils/local_survey"
-import { SURVEY_INPUT_KEY } from "../utils/local_survey"
+'use client';
+import { Dispatch, useEffect, useReducer } from 'react';
+import { SurveyQuestionType } from '../constants/QuestionType';
+import { LocalStorageService, SURVEY_KEY } from '../utils/local_survey';
+import { SURVEY_INPUT_KEY } from '../utils/local_survey';
 
 export type AnswerState = {
-    accessToken: string
-    answerToken: string
+    accessToken: string;
+    answerToken: string;
     answers: {
         [key: number]: {
-            value: any
-            label: string
-        }
-    }
+            value: any;
+            label: string;
+        };
+    };
     answersAudio?: {
         [key: number]: {
-            blob: Blob
-        }
-    }
-}
+            blob: any;
+        };
+    };
+};
 
 export type AnswerReducerAction = {
-    questionId: number
-    questionType: SurveyQuestionType
-    accessToken: string
-    answerToken: string
-    value: any
-    blobValue?: any
-}
+    questionId: number;
+    questionType: SurveyQuestionType;
+    accessToken: string;
+    answerToken: string;
+    value: any;
+    blobValue?: any;
+};
 
-export type AnswerReducerParams = { accessToken: string; answerToken: string }
+export type AnswerReducerParams = { accessToken: string; answerToken: string };
 
 export type LocalAnswerExam = {
-    answers: AnswerState
-    setAnswers: Dispatch<AnswerReducerAction>
-}
+    answers: AnswerState;
+    setAnswers: Dispatch<AnswerReducerAction>;
+};
 
-export function useLocalAnswerExam({ accessToken, answerToken }: AnswerReducerParams, initState? : AnswerState) {
+export function useLocalAnswerExam({ accessToken, answerToken }: AnswerReducerParams, initState?: AnswerState) {
     const _initState = initState ?? {
         accessToken: accessToken,
         answerToken: answerToken,
         answers: {},
-    }
+    };
     const [answers, setAnswers] = useReducer(
         (preState: AnswerState, action: AnswerReducerAction) => {
-            const local = LocalStorageService.getLocalStorageInstance()
+            const local = LocalStorageService.getLocalStorageInstance();
 
-            const newState = answerDispatcher(preState, action)
-            
-            local.set([accessToken, answerToken], "answers", newState)
-            return newState
+            const newState = answerDispatcher(preState, action);
+
+            local.set([accessToken, answerToken], 'answers', newState);
+            return newState;
         },
         _initState,
         (e) => {
             try {
-                const local = LocalStorageService.getLocalStorageInstance()
+                const local = LocalStorageService.getLocalStorageInstance();
 
                 // go to localstorage to get the answer's data:
-                const localAnswer = local.get([accessToken, answerToken, "answers"])
+                const localAnswer = local.get([accessToken, answerToken, 'answers']);
 
                 if (!localAnswer.accessToken || !localAnswer.answerToken) {
-                    return _initState
+                    return _initState;
                 }
-                return localAnswer
+                return localAnswer;
             } catch {
-                return _initState
+                return _initState;
             }
-        }
-    )
+        },
+    );
 
     useEffect(() => {
-        const local = LocalStorageService.getLocalStorageInstance()
+        const local = LocalStorageService.getLocalStorageInstance();
 
-        local.set([accessToken, answerToken], "answers", answers)
-    }, [answers])
+        local.set([accessToken, answerToken], 'answers', answers);
+    }, [answers]);
 
     return {
         answers,
         setAnswers,
-    }
+    };
 }
 
 function answerDispatcher(preState: AnswerState, action: AnswerReducerAction): AnswerState {
-    const preAnswer = preState.answers
-    const preAnswerAudio = preState.answersAudio
+    const preAnswer = preState.answers;
+    const preAnswerAudio = preState.answersAudio;
 
-    let value: any
-    let blob: any | undefined = undefined
+    let value: any;
+    let blob: any | undefined = undefined;
     switch (action.questionType) {
         case SurveyQuestionType.SELECT:
             if (action.value <= 0) {
-                value = []
-                break
+                value = [];
+                break;
             }
         case SurveyQuestionType.SIMPLE_CHOICE:
         case SurveyQuestionType.MULTIPLE_CHOICE:
-            value = Array.from(new Set(action.value))
-            break
+            value = Array.from(new Set(action.value));
+            break;
 
         default:
-            value = action.value
-            blob = action.blobValue
+            value = action.value;
+            blob = action.blobValue;
     }
 
     // luu duoc blob cho moi question id vao trong state,
@@ -113,7 +113,6 @@ function answerDispatcher(preState: AnswerState, action: AnswerReducerAction): A
             [action.questionId]: {
                 ...preAnswer[action.questionId],
                 value: value,
-
             },
         },
         answersAudio: {
@@ -122,5 +121,5 @@ function answerDispatcher(preState: AnswerState, action: AnswerReducerAction): A
                 blob: blob,
             },
         },
-    }
+    };
 }

@@ -28,8 +28,10 @@ type Props = {
     state: LocalAnswerExam;
     param: Array<any>;
     setPage: (page: number) => void;
+    changeSection: boolean;
+    isLimitSectionTime: boolean;
 };
-const FooterTest = ({ setPage, hasNextPage, currentPage }: Props) => {
+const FooterTest = ({ setPage, hasNextPage, currentPage, changeSection, isLimitSectionTime }: Props) => {
     // const userInfo = useSelector(userAuthSelector)
     const [popUp, setPopUp] = useState(false);
     const userLocal = JSON.parse(localStorage.getItem('session') || '{}');
@@ -39,6 +41,9 @@ const FooterTest = ({ setPage, hasNextPage, currentPage }: Props) => {
     const handleOpenModal = () => setOpenModal(true);
     const handleCloseModal = () => setOpenModal(false);
     const [directionPage, setDirectionPage] = useState(true);
+    const [titleModal, setTitleModal] = useState('');
+
+    useEffect(() => {}, [changeSection, isLimitSectionTime]);
 
     const styleBox = {
         position: 'absolute' as 'absolute',
@@ -93,7 +98,7 @@ const FooterTest = ({ setPage, hasNextPage, currentPage }: Props) => {
                             <WarningIcon sx={{ fontSize: 24 }} color="warning" />
                             <h4 className="ml-2 text-[#ed6c02]">Warning!</h4>
                         </div>
-                        <Typography>You will lose one play. Are you sure you want to move to another page?</Typography>
+                        <Typography>{titleModal}</Typography>
                         <div className="flex justify-between mt-6">
                             <Button
                                 color="success"
@@ -124,6 +129,7 @@ const FooterTest = ({ setPage, hasNextPage, currentPage }: Props) => {
                         onClick={() => {
                             setDirectionPage(false);
                             if (GlobalVariableInstance.getIsPlaying()) {
+                                setTitleModal('You will lose one play. Are you sure you want to move to another page?');
                                 handleOpenModal();
                             } else {
                                 setPage(currentPage - 1);
@@ -140,8 +146,19 @@ const FooterTest = ({ setPage, hasNextPage, currentPage }: Props) => {
                         disabled={!hasNextPage}
                         onClick={() => {
                             setDirectionPage(true);
-
-                            if (GlobalVariableInstance.getIsPlaying()) {
+                            if (changeSection) {
+                                if (isLimitSectionTime) {
+                                    setTitleModal(
+                                        'If you proceed to the next page, the timer will continue for the new test. Do you want to continue?',
+                                    );
+                                    handleOpenModal();
+                                } else {
+                                    setPage(currentPage + 1);
+                                    GlobalVariableInstance.removeQuestionID();
+                                    saveAnswersToBackend();
+                                }
+                            } else if (GlobalVariableInstance.getIsPlaying()) {
+                                setTitleModal('You will lose one play. Are you sure you want to move to another page?');
                                 handleOpenModal();
                             } else {
                                 setPage(currentPage + 1);
@@ -149,7 +166,7 @@ const FooterTest = ({ setPage, hasNextPage, currentPage }: Props) => {
                                 saveAnswersToBackend();
                             }
                         }}
-                        className="group ml-2 px-8 py-1 rounded bg-[#37854D] flex items-center disabled:opacity-50 disabled:cursor-default"
+                        className="group ml-2 px-8 py-1 rounded bg-green-700 flex items-center disabled:opacity-50 disabled:cursor-default"
                     >
                         <ArrowForwardIcon className="" />
                     </button>

@@ -1,23 +1,35 @@
 .round-index {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  left: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 10px;
-  color: red;
-  opacity: 0.3;
-  transition: all 0.4s ease-in-out;
-  transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 10px;
+    color: red;
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+    transform: translateY(-50%);
 }
 
 .round-index:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
-/* .split-pane {
-  top: 50px;
-} */
+.popup {
+    height: calc(100vh - 80px);
+    background: linear-gradient(to right, #edf1e8, #e0efe0);
+    overflow: auto;
+}
 
+@media only screen and (max-width: 600px) {
+    .popup {
+        height: calc(100vh - 65px);
+    }
+}
+.buttonStart {
+    display: block;
+    text-align: center;
+    margin-top: 80px;
+}

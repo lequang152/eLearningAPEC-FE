@@ -13,16 +13,16 @@ function IndexNumberQuestion({
     indexEnable?: boolean;
 }) {
     const getLocalStorage = JSON.parse(localStorage.getItem('survey') || '{}');
-    const accessToken = getLocalStorage.current_input.accessToken;
-    const answerToken = getLocalStorage.current_input.answerToken;
-    const getAnswersLocal = getLocalStorage[accessToken][answerToken]?.answers.answers;
+    const accessToken = getLocalStorage.current_input?.accessToken;
+    const answerToken = getLocalStorage.current_input?.answerToken;
+    const getAnswersLocal = answerToken ? getLocalStorage[accessToken][answerToken]?.answers.answers : {};
 
     return indexEnable ? (
         <div
             className={classNames(
                 {
                     'flex-row mr-4': questionType !== 'recording',
-                    'flex-col bg-yellow-1 h-[350px] py-3 px-5 text-justify': questionType === 'recording',
+                    'flex-col bg-[#f0f8ff] h-[350px] py-3 px-5 text-justify': questionType === 'recording',
                 },
                 'rounded-xl w-full h-fit flex text-left items-center',
             )}
@@ -32,8 +32,8 @@ function IndexNumberQuestion({
             ) : (
                 getAnswersLocal && (
                     <div
-                        className={`bg-[#337845] ${
-                            getAnswersLocal[index]?.label.length > 2 ? 'w-[50px] h-[30px]' : 'w-7 h-7'
+                        className={`bg-green-600 ${
+                            getAnswersLocal[index]?.label?.length > 2 ? 'w-[50px] h-[30px]' : 'w-7 h-7'
                         } 
                     mb-0 rounded-full text-white ${style['round-index']}`}
                     >

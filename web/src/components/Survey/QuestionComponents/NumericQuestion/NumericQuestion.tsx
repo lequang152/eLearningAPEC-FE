@@ -1,16 +1,16 @@
-import { QuestionProps } from "../../../../constants/props"
-import { Input } from "@mui/joy"
-import React from "react"
-import { NumericFormat, NumericFormatProps } from "react-number-format"
+import { QuestionProps } from '../../../../constants/props';
+import { Input } from '@mui/joy';
+import React from 'react';
+import { NumericFormat, NumericFormatProps } from 'react-number-format';
 
 interface CustomProps {
-    onChange: (event: { target: { name: string; value: string } }) => void
-    name: string
+    onChange: (event: { target: { name: string; value: string } }) => void;
+    name: string;
 }
 
 const NumericFormatAdapter = React.forwardRef<NumericFormatProps, CustomProps>(
     function NumericFormatAdapter(props, ref) {
-        const { onChange, ...other } = props
+        const { onChange, ...other } = props;
 
         return (
             <NumericFormat
@@ -22,33 +22,31 @@ const NumericFormatAdapter = React.forwardRef<NumericFormatProps, CustomProps>(
                             name: props.name,
                             value: values.value,
                         },
-                    })
+                    });
                 }}
                 thousandSeparator
                 valueIsNumericString
             />
-        )
-    }
-)
+        );
+    },
+);
 
 export const NumericQuestion = ({ question, state }: QuestionProps) => {
-    const { answers, setAnswers } = state
-    const value = answers.answers[question.questionId]
-    const stateValue = value ? value.value : ""
+    const { answers, setAnswers } = state;
+    const value = answers.answers[question.questionId];
+    const stateValue = value ? value.value : '';
     return (
         <div>
             <Input
                 value={stateValue}
                 onChange={(e) => {
-                    console.log(question.suggestedAnswers)
-
                     setAnswers({
                         questionId: question.questionId,
                         value: Number(e.target.value),
                         accessToken: state.answers.accessToken,
                         answerToken: state.answers.answerToken,
                         questionType: question.questionType,
-                    })
+                    });
                 }}
                 slotProps={{
                     input: {
@@ -58,8 +56,8 @@ export const NumericQuestion = ({ question, state }: QuestionProps) => {
                 color="success"
             />
         </div>
-    )
-}
+    );
+};
 
 {
     /* <input
